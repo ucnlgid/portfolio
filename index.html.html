@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio</title>
+  <style>
+    :root{
+      --bg:#0b0d16; --panel:rgba(255,255,255,.06); --line:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.62);
+      --accent:#7aa6ff; --r:18px; --max:1100px; --shadow:0 18px 70px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo","Noto Sans KR", Segoe UI, Roboto, Arial;
+      background: radial-gradient(1000px 600px at 20% 10%, rgba(122,166,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 75% 15%, rgba(255,154,213,.10), transparent 55%),
+                  var(--bg);
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(11,13,22,.78), rgba(11,13,22,.28));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      max-width:var(--max); margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+    }
+    .brand{font-weight:800; letter-spacing:.2px; display:flex; gap:10px; align-items:center}
+    .dot{width:10px;height:10px;border-radius:999px;background:radial-gradient(circle at 30% 30%, #fff, var(--accent) 45%, rgba(122,166,255,.2) 70%); box-shadow:0 0 18px rgba(122,166,255,.55)}
+    .links{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .links a{
+      color:var(--muted); text-decoration:none; font-weight:700; font-size:14px;
+      padding:8px 10px; border-radius:12px; transition:.2s;
+    }
+    .links a:hover{color:var(--text); background:rgba(255,255,255,.06)}
+    main{padding:18px 18px 70px}
+    section{max-width:var(--max); margin:0 auto; padding:44px 0}
+    .card{
+      background:var(--panel); border:1px solid rgba(255,255,255,.12);
+      border-radius:var(--r); box-shadow:var(--shadow); overflow:hidden;
+    }
+    .inner{padding:22px}
+    h1{margin:6px 0 10px; font-size:clamp(28px,3.2vw,44px); letter-spacing:-.4px; line-height:1.12}
+    .lead{margin:0; color:var(--muted); line-height:1.6}
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:14px; align-items:stretch}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+    .mini{
+      display:grid; gap:10px;
+      grid-template-columns: 1fr;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:14px; margin-top:14px;
+      color:var(--muted); font-size:14px; line-height:1.55;
+    }
+    .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .pill{
+      font-size:12.5px; color:rgba(255,255,255,.76);
+      border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05);
+      padding:7px 10px; border-radius:999px;
+    }
+
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(135deg, rgba(122,166,255,.12), rgba(255,154,213,.07));
+    }
+    .search{
+      display:flex; gap:8px; align-items:center; flex:1; min-width:220px;
+    }
+    input{
+      width:100%;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:none;
+    }
+    input::placeholder{color:rgba(255,255,255,.45)}
+    .filters{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .chip{
+      cursor:pointer; user-select:none;
+      padding:9px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:rgba(255,255,255,.78);
+      font-weight:800; font-size:13px;
+      transition:.18s;
+    }
+    .chip:hover{background:rgba(255,255,255,.09)}
+    .chip.active{
+      border-color: rgba(122,166,255,.55);
+      box-shadow: 0 0 0 3px rgba(122,166,255,.18);
+      color:var(--text);
+    }
+
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 16px;
+    }
+    @media (max-width:980px){.grid{grid-template-columns: repeat(2, 1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns: 1fr}}
+    .item{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      overflow:hidden;
+      background: rgba(255,255,255,.04);
+      cursor:pointer;
+      transition:.18s;
+    }
+    .item:hover{transform:translateY(-2px); background:rgba(255,255,255,.06)}
+    .thumb{
+      aspect-ratio: 4 / 3;
+      background:#111;
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%; height:100%; object-fit:cover; display:block;
+      transform:scale(1.01);
+    }
+    .meta{padding:12px 12px 13px}
+    .title{margin:0 0 6px; font-weight:900; letter-spacing:-.2px}
+    .sub{margin:0; color:var(--muted); font-size:13px; line-height:1.4}
+    .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+    .tag{font-size:12px; padding:6px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.72)}
+    footer{max-width:var(--max); margin:0 auto; padding:24px 18px 44px; color:rgba(255,255,255,.55); font-size:12.5px}
+
+    /* modal */
+    .modal{
+      position:fixed; inset:0; display:none; place-items:center;
+      background: rgba(0,0,0,.62);
+      z-index:50;
+      padding: 20px;
+    }
+    .modal.open{display:grid}
+    .modalCard{
+      width:min(980px, 100%);
+      background: rgba(12,14,28,.86);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+    }
+    .modalTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding: 14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(135deg, rgba(122,166,255,.14), rgba(255,154,213,.08));
+    }
+    .modalTop h3{margin:0; font-size:15px}
+    .modalTop .mSub{margin:6px 0 0; color:rgba(255,255,255,.70); font-size:12.5px; line-height:1.35}
+    .x{
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.88);
+      width:34px; height:34px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{padding: 14px}
+    .desc{color:rgba(255,255,255,.82); line-height:1.6; font-size:13.5px; margin:0 0 12px}
+    .kv{display:grid; grid-template-columns: 90px 1fr; gap:8px 10px; border-top:1px solid rgba(255,255,255,.10); padding-top:12px}
+    .k{color:rgba(255,255,255,.62)}
+    .v{color:rgba(255,255,255,.86)}
+    .gallery{
+      display:grid; gap:10px;
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 14px;
+    }
+    @media (max-width:760px){.gallery{grid-template-columns:1fr}}
+    .gallery img{
+      width:100%; border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background:#111;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand"><span class="dot"></span><span>Portfolio</span></div>
+      <div class="links">
+        <a href="#home">홈</a>
+        <a href="#works">작업</a>
+        <a href="#contact">연락</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="card">
+        <div class="inner">
+          <h1>작업을 ‘깔끔하게’ 모아두는<br/>포트폴리오 홈페이지</h1>
+          <p class="lead">
+            작품은 <b>works.json</b>에 추가하면 자동으로 갤러리에 반영되도록 구성.
+            카테고리(태그) 필터와 검색도 포함돼.
+          </p>
+          <div class="pillrow">
+            <span class="pill">그리드 갤러리</span>
+            <span class="pill">태그 필터</span>
+            <span class="pill">검색</span>
+            <span class="pill">모달 상세</span>
+            <span class="pill">반응형</span>
+          </div>
+          <div class="mini">
+            <div>작품 추가 방법: 이미지 넣기 → works.json에 한 줄 추가</div>
+            <div>추후 업로드 화면(관리자)도 원하면 스토리지 연동으로 확장 가능</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inner">
+          <h3 style="margin:0 0 8px; font-size:16px">프로필</h3>
+          <p class="lead" style="margin:0 0 14px">여기 내용은 네 소개로 교체하면 돼. (경력, 강점, 작업 성향)</p>
+          <div class="kv" style="border-top:none; padding-top:0">
+            <div class="k">분야</div><div class="v">Graphic / UI</div>
+            <div class="k">키워드</div><div class="v">정돈, 리듬, 시스템</div>
+            <div class="k">툴</div><div class="v">Figma · Adobe · etc</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="works">
+      <div class="card">
+        <div class="toolbar">
+          <div class="search">
+            <input id="q" placeholder="검색: 제목, 설명, 태그" />
+          </div>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div class="grid" id="grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="card">
+        <div class="inner">
+          <h3 style="margin:0 0 10px; font-size:16px">연락</h3>
+          <p class="lead" style="margin:0 0 14px">메일/인스타/비핸스 링크로 바꿔서 사용.</p>
+          <div class="kv" style="margin-top:0">
+            <div class="k">Email</div><div class="v">your@email.com</div>
+            <div class="k">Link</div><div class="v">behance.net/...</div>
+            <div class="k">Note</div><div class="v">작업 문의 환영</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© Portfolio · works.json 기반 업데이트</footer>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="작업 상세">
+    <div class="modalCard">
+      <div class="modalTop">
+        <div>
+          <h3 id="mTitle">제목</h3>
+          <div class="mSub" id="mSub">연도 · 역할 · 태그</div>
+        </div>
+        <button class="x" id="mClose" type="button" aria-label="닫기">×</button>
+      </div>
+      <div class="modalBody">
+        <p class="desc" id="mDesc"></p>
+        <div class="kv">
+          <div class="k">연도</div><div class="v" id="mYear"></div>
+          <div class="k">역할</div><div class="v" id="mRole"></div>
+          <div class="k">태그</div><div class="v" id="mTags"></div>
+        </div>
+        <div class="gallery" id="mGallery"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const q = document.getElementById('q');
+    const filters = document.getElementById('filters');
+
+    const modal = document.getElementById('modal');
+    const mClose = document.getElementById('mClose');
+    const mTitle = document.getElementById('mTitle');
+    const mSub = document.getElementById('mSub');
+    const mDesc = document.getElementById('mDesc');
+    const mYear = document.getElementById('mYear');
+    const mRole = document.getElementById('mRole');
+    const mTags = document.getElementById('mTags');
+    const mGallery = document.getElementById('mGallery');
+
+    let works = [];
+    let activeTag = 'ALL';
+
+    function uniqTags(items){
+      const set = new Set();
+      for(const w of items){
+        (w.tags || []).forEach(t => set.add(t));
+      }
+      return ['ALL', ...Array.from(set).sort((a,b)=>a.localeCompare(b))];
+    }
+
+    function renderFilters(){
+      const tags = uniqTags(works);
+      filters.innerHTML = '';
+      for(const t of tags){
+        const chip = document.createElement('div');
+        chip.className = 'chip' + (t === activeTag ? ' active' : '');
+        chip.textContent = t === 'ALL' ? '전체' : t;
+        chip.addEventListener('click', () => {
+          activeTag = t;
+          renderFilters();
+          render();
+        });
+        filters.appendChild(chip);
+      }
+    }
+
+    function matches(w, query){
+      const hay = [
+        w.title, w.year, w.role, w.desc,
+        ...(w.tags || [])
+      ].join(' ').toLowerCase();
+      return hay.includes(query.toLowerCase());
+    }
+
+    function filtered(){
+      const query = (q.value || '').trim();
+      return works.filter(w => {
+        const tagOk = (activeTag === 'ALL') || (w.tags || []).includes(activeTag);
+        const qOk = query ? matches(w, query) : true;
+        return tagOk && qOk;
+      });
+    }
+
+    function openWork(w){
+      mTitle.textContent = w.title || '';
+      const tline = (w.tags || []).join(', ');
+      mSub.textContent = [w.year, w.role, tline].filter(Boolean).join(' · ');
+      mDesc.textContent = w.desc || '';
+      mYear.textContent = w.year || '-';
+      mRole.textContent = w.role || '-';
+      mTags.textContent = tline || '-';
+
+      mGallery.innerHTML = '';
+      const imgs = (w.images && w.images.length) ? w.images : (w.thumb ? [w.thumb] : []);
+      for(const src of imgs){
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = w.title || 'work image';
+        mGallery.appendChild(img);
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+    }
+    mClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+    function card(w){
+      const el = document.createElement('article');
+      el.className = 'item';
+      el.innerHTML = `
+        <div class="thumb">
+          <img loading="lazy" src="${w.thumb || ''}" alt="${(w.title || 'work')}" />
+        </div>
+        <div class="meta">
+          <p class="title">${w.title || ''}</p>
+          <p class="sub">${[w.year, w.role].filter(Boolean).join(' · ')}</p>
+          <div class="tags">
+            ${(w.tags || []).slice(0,4).map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      `;
+      el.addEventListener('click', () => openWork(w));
+      return el;
+    }
+
+    function render(){
+      const items = filtered();
+      grid.innerHTML = '';
+      for(const w of items) grid.appendChild(card(w));
+      if(items.length === 0){
+        const empty = document.createElement('div');
+        empty.style.padding = '16px';
+        empty.style.color = 'rgba(255,255,255,.65)';
+        empty.textContent = '조건에 맞는 작업이 없어.';
+        grid.appendChild(empty);
+      }
+    }
+
+    q.addEventListener('input', render);
+
+    async function init(){
+      try{
+        const res = await fetch('./works.json', { cache: 'no-store' });
+        works = await res.json();
+      }catch(e){
+        works = [];
+      }
+      // 최신이 위로 오게 (year 내림차순이 대충 작동)
+      works.sort((a,b)=>String(b.year||'').localeCompare(String(a.year||'')));
+      renderFilters();
+      render();
+    }
+    init();
+  </script>
+</body>
+</html>

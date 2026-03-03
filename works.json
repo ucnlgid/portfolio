@@ -1,0 +1,11 @@
+[
+  {
+    "title": "첫 번째 작업",
+    "year": "2026",
+    "role": "그래픽 디자인",
+    "tags": ["Branding", "Poster"],
+    "thumb": "assets/works/work-01.png",
+    "images": ["assets/works/work-01.png"],
+    "desc": "작업 설명을 여기에 적어."
+  }
+]
